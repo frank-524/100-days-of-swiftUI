@@ -91,3 +91,89 @@ func greet(_ person: String) {
 greet("Jerry")
 
 // 6. Default Parameters
+func greet(_ person: String, nicely: Bool = true)
+{
+    if nicely == true {
+        print("Hello, \(person)!")
+    } else {
+        print("Oh no, it's \(person) again…")
+    }
+
+}
+
+// Greet can be called in two ways
+greet("Taylor")
+greet("Taylor", nicely: false)
+
+
+// 7. Varadic Functions
+//For example a square() function that can square many numbers:
+func square2(numbers: Int...) {
+    for number in numbers {
+        print("\(number) squared is \(number * number)")
+    }
+}
+
+// Now we can run that with lots of numbers just by passing them in separated by commas:
+
+square2(numbers: 1, 2, 3, 4, 5)
+
+// 8. Throw functions
+/*
+1. First we need to define an enum that describes the errors we can throw. Enum must be Error type
+2. Write function
+3. Use throws keyword before the function's return value
+4. Use the enum and throw keyword inside the function
+
+Example
+*/
+
+enum PasswordError: Error {
+    case obvious
+}
+
+func checkPassword(_ password: String) throws -> Bool {
+    if password == "password" {
+        throw PasswordError.obvious
+}
+
+    return true
+}
+
+// 9. Calling throw functions
+
+/*
+To call an error-throwing functions you need to use the following 3 keywords
+    - Do: starts a section of code that might cause problems
+    - Try: is used before every function that might thrown an error
+    - Catch: lets you handle errors gracefully
+
+If any errors are thrown inside the do block, execution immediately jumps to the catch block. Let's try calling checkPassword() with a parameter that throws an error:
+ 
+ NOTE: Example uses previous code in section 8 above
+*/
+
+do {
+    try checkPassword("password")
+    print("That password is good!")
+} catch {
+    print("You can't use that password.")
+}
+
+
+// 10. Inout parameters
+func doubleInPlace(number: inout Int) {
+    number *= 2
+}
+
+/*
+    - To use the function, you first need to make a variable integer - you CANNOT use a constant with inout.
+    - You also need to pass the parameter to doubleInPlace using an ampersand, &, before its name, which is an explicit recognition that you're aware it is being used as inout.
+
+In code, you'd write this:
+ 
+ NOTICE: How the number is changed on the right
+*/
+
+var myNum = 10
+doubleInPlace(number: &myNum)
